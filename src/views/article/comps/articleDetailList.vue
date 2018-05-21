@@ -5,7 +5,7 @@
         <span>作者：{{detail.createUser}}</span>
         <span>创建时间：{{detail.createTime}}</span>
     </div>
-    <p class="content">{{detail.content}}</p>
+    <div class="content" v-html="detail.content"></div>
 </div>
 </template>
 
@@ -26,9 +26,8 @@ export default {
   methods: {
     getDetail () {
       getDetailById(this.id).then(data => {
-        this.detail = data.content
-        this.detail.createTime = moment(this.detail.createTime).format('YYYY-MM-DD HH:mm:ss')
-        console.log('22222', this.detail)
+        this.detail = data.content;
+        this.detail.createTime = moment(this.detail.createTime).format('YYYY-MM-DD HH:mm:ss');
       })
     }
   }
@@ -52,5 +51,9 @@ export default {
 .content{
     text-indent:35px;
     padding:10px 0 20px 0;
+}
+.content p{
+    line-height: 32px;
+    padding: 4px 0;
 }
 </style>

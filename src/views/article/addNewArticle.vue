@@ -5,12 +5,12 @@
                 <el-input v-model="form.title"></el-input>
             </el-form-item>
             <el-form-item label="内容">
-                <editor @input-info="getContent(data)"/>
+                <editor @inputInfo="getContent"/>
             </el-form-item>
             <el-form-item >
                 <div class="btn-group">
                     <el-button @click = "cancel">返回</el-button>
-                    <el-button type="primary" @click="onSubmit">保存</el-button>
+                    <el-button type="primary" @click="onSubmit" :loading="laoding">保存</el-button>
                 </div>
 
             </el-form-item>
@@ -20,6 +20,9 @@
 
 <script>
 import editor from '../../components/editor/index'
+import moment from 'moment'
+import { addNews } from '@/api/article';
+
 export default {
   components: {editor},
   data () {
@@ -27,18 +30,29 @@ export default {
       form: {
         title: '', // 标题名称
         content: '' // 内容
-      }
+      },
+      loading:false
     }
   },
   methods: {
     getContent (data) {
-      console.log(data)
       this.form.content = data
+      console.log(this.form.content);
     },
 
     // 保存
     onSubmit () {
-      console.log(111111111)
+      let now = moment().format('YYYY-MM-DD HH:mm:ss');
+      let user = 'test02';
+      this.loading  = true;
+      addNews(this.form.title,this.form.content,user,0,now).then(data =>{
+        this.loading = false;
+        this.$message({
+          type:'success',
+          message:'新增成功'
+        });
+        this.$router.push({name:'文章列表'});
+      })
     },
 
     // 返回上一级页面

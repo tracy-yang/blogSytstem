@@ -30,6 +30,7 @@ export default {
   },
   methods: {
     onEditorBlur (quill) {
+      console.log(this.content)
       this.$emit('inputInfo', this.content)
     }
     // onEditorFocus (quill) {

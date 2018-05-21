@@ -5,19 +5,19 @@
         </div>
         <el-table :data="tableData" stripe style="width: 100%">
             <el-table-column type="index" width="80"></el-table-column>
-            <el-table-column prop="title" label="标题" width="180">
+            <el-table-column prop="title" label="标题"  min-width="120">
                 <template scope="scope">
                     <el-button type="text" @click="toDetail(scope.row.id)">{{scope.row.title}}</el-button>
                 </template>
             </el-table-column>
-            <el-table-column prop="createUser" label="创建人" width="180"></el-table-column>
+            <el-table-column prop="createUser" label="创建人"></el-table-column>
             <el-table-column prop="createTime" label="创建时间"></el-table-column>
-            <el-table-column prop="state" label="状态">
+            <el-table-column prop="state" label="状态" width="100">
                 <template scope="scope">
                     <p>{{scope.row.state | convertStateToDescription}}</p>
                 </template>
             </el-table-column>
-            <el-table-column  label="操作">
+            <el-table-column  label="操作" width="80">
                 <template scope="scope">
                     <el-button type="text">{{scope.row.state === 0?'上线':'下线'}}</el-button>
                 </template>

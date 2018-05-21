@@ -1,26 +1,40 @@
 import fetch from '../utils/fetch'
 
 // 获取所有新闻列表
-export function getNewsList () {
-  // const params = {
-  //     rows,
-  //     page,
-  //     userId
-  // };
+export function getNewsList (state) {
+  const data = {
+    state
+  };
   return fetch({
     url: 'article/getNewsList',
-    method: 'post'
-    // params
+    method: 'post',
+    data
   })
 }
 
-// 根据ID获取新闻的纤细内容
+// 根据ID获取新闻的详细内容
 export function getDetailById (id) {
   const data = {
     id
   }
   return fetch({
     url: 'article/detail',
+    method: 'post',
+    data
+  })
+}
+
+// 新增新闻
+export function addNews (title,content,createUser,state,createTime) {
+  const data = {
+    title,
+    content,
+    createUser,
+    state,
+    createTime
+  }
+  return fetch({
+    url: 'article/addNews',
     method: 'post',
     data
   })
