@@ -1,31 +1,38 @@
 <template>
 <div class="app-wrapper">
-    <h2 class="title">hahahahhaha</h2>
-    <p class="content">222222222222222222</p>
-
-</div>   
+    <h2 class="title">{{detail.title}}</h2>
+    <div class="info">
+        <span>作者：{{detail.createUser}}</span>
+        <span>创建时间：{{detail.createTime}}</span>
+    </div>
+    <p class="content">{{detail.content}}</p>
+</div>
 </template>
 
 <script>
-import {getDetailById} from '@/api/article';
+import { getDetailById } from '@/api/article'
+var moment = require('moment')
+
 export default {
-    data(){
-        return {
-            id : this.$route.params.id
-        }
-    },
-    created(){
-        console.log(this.$route.params.id);
-    },
-    methods:{
-        // getDetail(){
-        //     console.log(this.$route.params.id);
-        //     getDetailById().then(data =>{
-        //         console.log(data);
-        //     })
-        // }
+  data () {
+    return {
+      id: this.$route.params.id,
+      detail: null
     }
-    
+  },
+  created () {
+    this.getDetail()
+  },
+  methods: {
+    getDetail () {
+      getDetailById(this.id).then(data => {
+        this.detail = data.content
+        this.detail.createTime = moment(this.detail.createTime).format('YYYY-MM-DD HH:mm:ss')
+        console.log('22222', this.detail)
+      })
+    }
+  }
+
 }
 </script>
 
@@ -35,10 +42,15 @@ export default {
     color:#333;
     text-align: center;
 }
+.info{
+    padding:10px 0;
+    text-align: center;
+}
+.info span:first-of-type{
+    margin-right:15px;
+}
 .content{
     text-indent:35px;
     padding:10px 0 20px 0;
 }
 </style>
-
-

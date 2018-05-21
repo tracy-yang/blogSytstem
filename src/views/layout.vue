@@ -6,11 +6,11 @@
     <el-container>
         <el-aside width="200px">
             <ul>
-                <li v-for="(item,index) in routerList" :key="index" class="router-item" v-if="item.path !== '*'">
+                <li v-for="(item,index) in routerList" :key="index" class="router-item" v-if="item.path !== '*'  &&  item.path !== '/'">
                     <router-link :to="item.path" >{{item.name}}</router-link>
                 </li>
             </ul>
-            
+
         </el-aside>
         <el-main>
             <transition>
@@ -23,24 +23,23 @@
 </template>
 
 <script>
-import router from '../router/index';
+import router from '../router/index'
 
 export default {
-    data(){
-        return {
-            routerList:[] // 路由列表
-        }
-    },
-    created(){
-        this.showRouter();
-    },
-    methods:{
-        // 显示所有路由
-        showRouter(){
-            this.routerList = router.options.routes;
-        }
+  data () {
+    return {
+      routerList: [] // 路由列表
     }
-    
+  },
+  created () {
+    this.showRouter()
+  },
+  methods: {
+    // 显示所有路由
+    showRouter () {
+      this.routerList = router.options.routes
+    }
+  }
 
 }
 </script>
@@ -95,7 +94,6 @@ line-height: 60px;
     bottom: 0;
 }
 
-
 .router-item  a{
     padding-right: 20px;
     padding-left: 20px;
@@ -109,8 +107,3 @@ line-height: 60px;
     background-color: #eee;
 }
 </style>
-
-
-
-
-
