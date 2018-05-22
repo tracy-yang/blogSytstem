@@ -47,7 +47,7 @@ export default {
       this.loading  = true;
       addNews(this.form.title,this.form.content,user,0,now).then(data =>{
         this.loading = false;
-        this.$message({
+       this.$message({
           type:'success',
           message:'新增成功'
         });

@@ -39,3 +39,15 @@ export function addNews (title,content,createUser,state,createTime) {
     data
   })
 }
+
+export function setState(id,state){
+  const data = {
+    id,
+    state
+  }
+  return fetch({
+    url: 'article/setStateById',
+    method: 'post',
+    data
+  })
+}

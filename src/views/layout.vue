@@ -6,7 +6,7 @@
     <el-container>
         <el-aside width="200px">
             <ul>
-                <li v-for="(item,index) in routerList" :key="index" class="router-item" v-if="item.path !== '*'  &&  item.path !== '/'">
+                <li v-for="(item,index) in routerList" :key="index" class="router-item" v-if="item.path !== '*'  &&  item.path !== '/' && item.path !== '/login'">
                     <router-link :to="item.path" >{{item.name}}</router-link>
                 </li>
             </ul>

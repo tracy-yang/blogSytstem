@@ -19,7 +19,7 @@
             </el-table-column>
             <el-table-column  label="操作" width="80">
                 <template scope="scope">
-                    <el-button type="text">{{scope.row.state === 0?'上线':'下线'}}</el-button>
+                    <el-button type="text" @click="changeState(scope.row.id,scope.row.state)">{{scope.row.state === 0?'上线':'下线'}}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { getNewsList } from '../../../api/article'
+import { getNewsList , setState} from '../../../api/article'
 var moment = require('moment')
 
 export default {
@@ -65,11 +65,38 @@ export default {
     // 跳转到新增页面
     toAdd () {
       this.$router.push({name: '新增'})
+    },
+
+    // 上线或者下线
+    changeState(id,state){
+      let info;
+      let flag = 0;
+      if(state == 0) flag = 1;
+      if(state){
+        info = '确认是否要将该条新闻下线？'
+      } else{
+        info = '确认是否要上线该条新闻？'
+      }
+      this.$confirm(info, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+      }).then(() => {
+          if(id)
+          setState(id,flag).then(data =>{
+            console.log(data.errorMsg);
+            this.$message({
+              type:'success',
+              message:data.errorMsg
+            });
+            this.getTableData ();
+        })
+      })
     }
   },
   filters: {
-    convertStateToDescription (state) {
-      return ['未上线', '已上线'][state]
+    convertStateToDescription (index) {
+      return ['未上线', '已上线'][index]
     }
   }
 
