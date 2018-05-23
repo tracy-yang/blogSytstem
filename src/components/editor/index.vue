@@ -2,9 +2,10 @@
   <quill-editor v-model="content"
         ref="myQuillEditor"
         :options="editorOption"
-        @blur="onEditorBlur($event)">
-  </quill-editor>
 
+        @change="onEditorChange($event)">
+  </quill-editor>
+<!--        @blur="onEditorBlur($event)"-->
 </template>
 
 <script>
@@ -29,16 +30,21 @@ export default {
     // console.log('this is current quill instance object', this.editor)
   },
   methods: {
-    onEditorBlur (quill) {
-      console.log(this.content)
-      this.$emit('inputInfo', this.content)
-    }
+    // onEditorBlur (quill) {
+    //   console.log(this.content)
+    //   this.$emit('inputInfo', this.content)
+    // },
     // onEditorFocus (quill) {
     //   console.log('editor focus!', quill)
     // },
     // onEditorReady (quill) {
     //   console.log('editor ready!', quill)
     // }
+    onEditorChange ({ quill, html, text }) {
+      // console.log('editor change!', quill, html, text)
+      this.content = html
+      this.$emit('inputInfo', this.content)
+    }
   }
 
 }

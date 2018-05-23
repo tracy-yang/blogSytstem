@@ -26,8 +26,8 @@ export default {
   methods: {
     getDetail () {
       getDetailById(this.id).then(data => {
-        this.detail = data.content;
-        this.detail.createTime = moment(this.detail.createTime).format('YYYY-MM-DD HH:mm:ss');
+        this.detail = data.content
+        this.detail.createTime = moment(this.detail.createTime).format('YYYY-MM-DD HH:mm:ss')
       })
     }
   }
