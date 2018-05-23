@@ -2,8 +2,8 @@
   <quill-editor v-model="content"
         ref="myQuillEditor"
         :options="editorOption"
-
-        @change="onEditorChange($event)">
+        @change="onEditorChange($event)"
+        >
   </quill-editor>
 <!--        @blur="onEditorBlur($event)"-->
 </template>
@@ -13,6 +13,7 @@
 // you can also register quill modules in the component
 
 export default {
+  props:['contentInfo'],
   data () {
     return {
       content: '',
@@ -24,6 +25,16 @@ export default {
   computed: {
     editor () {
       return this.$refs.myQuillEditor.quill
+    }
+  },
+  watch:{
+    contentInfo:{
+      handler: function (val, oldVal) {
+        if(val){
+          this.content = val;
+        }
+      },
+      immediate: true
     }
   },
   mounted () {
@@ -39,7 +50,7 @@ export default {
     // },
     // onEditorReady (quill) {
     //   console.log('editor ready!', quill)
-    // }
+    // },
     onEditorChange ({ quill, html, text }) {
       // console.log('editor change!', quill, html, text)
       this.content = html

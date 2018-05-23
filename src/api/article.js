@@ -51,3 +51,22 @@ export function setState(id,state){
     data
   })
 }
+
+// 编辑新闻内容
+export function editNews(id,title,content,createUser,updateTime){
+  const data = {
+    id,
+    title,
+    content,
+    createUser,
+    updateTime
+
+  }
+  return fetch({
+    url: 'article/editNews',
+    method: 'post',
+    data
+  })
+}
+
+

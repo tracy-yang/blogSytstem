@@ -20,7 +20,7 @@
             <el-table-column  label="操作" width="150">
                 <template scope="scope">
                     <el-button type="text" @click="changeState(scope.row.id,scope.row.state)">{{scope.row.state === 0?'上线':'下线'}}</el-button>
-                    <el-button type="text" @click="toEdit" v-if="!scope.row.state">编辑</el-button>
+                    <el-button type="text" @click="toEdit(scope.row.id)" v-if="!scope.row.state">编辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -97,8 +97,9 @@ export default {
     },
 
     // 编辑
-    toEdit () {
-      this.$router.push()
+    toEdit (id) {
+      console.log(id);
+      this.$router.push({name: '编辑',params:{id}})
     }
   },
   filters: {

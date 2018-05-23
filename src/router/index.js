@@ -46,7 +46,8 @@ export default new Router({
       children: [
         {path: 'list', component: article, name: '文章列表'},
         {path: 'datail/:id', component: articelDetail, name: '详情页'},
-        {path: 'addNewArticle', component: addNewArticle, name: '新增'}
+        {path: 'addNewArticle', component: addNewArticle, name: '新增'},
+        {path: 'addNewArticle/:id', component: addNewArticle, name: '编辑'}
 
       ]
     },
