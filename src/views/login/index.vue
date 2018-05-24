@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { login } from '@/api/user'
 export default {
   data () {
     return {
@@ -35,7 +36,7 @@ export default {
   },
   methods: {
     submitForm () {
-      console.log(111111111)
+      console.log(this.$store.dispatch('login', 'test0345'))
     }
   }
 

@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.3.9",
+    "js-cookie": "^2.2.0",
     "moment": "^2.22.1",
     "vue": "^2.5.2",
     "vue-quill-editor": "^3.0.6",

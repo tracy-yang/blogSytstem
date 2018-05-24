@@ -21,28 +21,28 @@
 <script>
 import editor from '../../components/editor/index'
 import moment from 'moment'
-import { addNews , getDetailById , editNews} from '@/api/article'
+import { addNews, getDetailById, editNews} from '@/api/article'
 
 export default {
   components: {editor},
   data () {
     return {
-      id:this.$route.params.id,
+      id: this.$route.params.id,
       form: {
         title: '', // 标题名称
         content: '', // 内容
-        createUser:'test02' , // 创建人
-        state:0 , // 状态
+        createUser: 'test02', // 创建人
+        state: 0 // 状态
       },
       loading: false
     }
   },
-  created(){
-    if(this.id){
+  created () {
+    if (this.id) {
       this.getDetailById()
     }
   },
-  watch:{
+  watch: {
 
   },
   methods: {
@@ -52,20 +52,19 @@ export default {
     },
 
     // 根据ID获取新闻的内容
-    getDetailById(){
-      getDetailById(this.id).then(data =>{
-        this.form.title = data.content.title;
-        this.form.content = data.content.content;
+    getDetailById () {
+      getDetailById(this.id).then(data => {
+        this.form.title = data.content.title
+        this.form.content = data.content.content
       })
-
     },
 
     // 保存
     onSubmit () {
       this.loading = true
-      let now = moment().format('YYYY-MM-DD HH:mm:ss');
-      if(this.id){ // 编辑
-        editNews(this.id,this.form.title, this.form.content, this.form.createUser, now).then(data =>{
+      let now = moment().format('YYYY-MM-DD HH:mm:ss')
+      if (this.id) { // 编辑
+        editNews(this.id, this.form.title, this.form.content, this.form.createUser, now).then(data => {
           this.loading = false
           this.$message({
             type: 'success',
@@ -75,7 +74,7 @@ export default {
         }).catch(err => {
           this.loading = false
         })
-      }else{ // 新增
+      } else { // 新增
         addNews(this.form.title, this.form.content, this.form.createUser, this.form.state, now).then(data => {
           this.loading = false
           this.$message({

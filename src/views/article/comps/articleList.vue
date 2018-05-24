@@ -7,11 +7,12 @@
             <el-table-column type="index" width="80"></el-table-column>
             <el-table-column prop="title" label="标题"  min-width="120">
                 <template scope="scope">
-                    <el-button type="text" @click="toDetail(scope.row.id)">{{scope.row.title}}</el-button>
+                    <el-button type="text" @click="toDetail(scope.row._id)">{{scope.row.title}}</el-button>
                 </template>
             </el-table-column>
             <el-table-column prop="createUser" label="创建人"></el-table-column>
             <el-table-column prop="createTime" label="创建时间"></el-table-column>
+            <el-table-column prop="updateTime" label="更新时间"></el-table-column>
             <el-table-column prop="state" label="状态" width="100">
                 <template scope="scope">
                     <p>{{scope.row.state | convertStateToDescription}}</p>
@@ -19,8 +20,8 @@
             </el-table-column>
             <el-table-column  label="操作" width="150">
                 <template scope="scope">
-                    <el-button type="text" @click="changeState(scope.row.id,scope.row.state)">{{scope.row.state === 0?'上线':'下线'}}</el-button>
-                    <el-button type="text" @click="toEdit(scope.row.id)" v-if="!scope.row.state">编辑</el-button>
+                    <el-button type="text" @click="changeState(scope.row._id,scope.row.state)">{{scope.row.state === 0?'上线':'下线'}}</el-button>
+                    <el-button type="text" @click="toEdit(scope.row._id)" v-if="!scope.row.state">编辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -29,7 +30,8 @@
 
 <script>
 import { getNewsList, setState} from '../../../api/article'
-var moment = require('moment')
+import moment from 'moment'
+import {mapState} from 'vuex'
 
 export default {
   data () {
@@ -40,20 +42,20 @@ export default {
   created () {
     this.getTableData()
   },
+  // computed: {
+  //   mapState({
+  //     userName:state => state.user.userName
+  //   })
+
+  // },
   methods: {
     // 获取列表信息
     getTableData () {
       getNewsList().then(res => {
-        console.log(res.content.list)
-        this.tableData = res.content.list.map(item => {
-          return {
-            'id': item._id,
-            'title': item.title,
-            'content': item.content,
-            'createUser': item.createUser,
-            'createTime': moment(item.createTime).format('YYYY-MM-DD HH:mm:ss'),
-            'state': item.state
-          }
+        this.tableData = res.content.list
+        this.tableData.forEach(item => {
+          item.createTime = item.createTime ? moment(item.createTime).format('YYYY-MM-DD HH:mm:ss') : '--'
+          item.updateTime = item.updateTime ? moment(item.updateTime).format('YYYY-MM-DD HH:mm:ss') : '--'
         })
       })
     },
@@ -98,8 +100,8 @@ export default {
 
     // 编辑
     toEdit (id) {
-      console.log(id);
-      this.$router.push({name: '编辑',params:{id}})
+      console.log(id)
+      this.$router.push({name: '编辑', params: {id}})
     }
   },
   filters: {

@@ -1,12 +1,12 @@
 <template>
-<div class="app-wrapper">
+  <div class="app-wrapper">
     <h2 class="title">{{detail.title}}</h2>
     <div class="info">
         <span>作者：{{detail.createUser}}</span>
         <span>创建时间：{{detail.createTime}}</span>
     </div>
     <div class="content" v-html="detail.content"></div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -17,7 +17,7 @@ export default {
   data () {
     return {
       id: this.$route.params.id,
-      detail: null
+      detail: ''
     }
   },
   created () {

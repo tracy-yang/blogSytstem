@@ -13,7 +13,7 @@
 // you can also register quill modules in the component
 
 export default {
-  props:['contentInfo'],
+  props: ['contentInfo'],
   data () {
     return {
       content: '',
@@ -27,11 +27,11 @@ export default {
       return this.$refs.myQuillEditor.quill
     }
   },
-  watch:{
-    contentInfo:{
+  watch: {
+    contentInfo: {
       handler: function (val, oldVal) {
-        if(val){
-          this.content = val;
+        if (val) {
+          this.content = val
         }
       },
       immediate: true
