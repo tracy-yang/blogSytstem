@@ -114,13 +114,14 @@ export default {
     right: 20px;
     z-index: 100;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+    background:#333;
 }
 .subMenu li{
     padding:0 15px;
     border-bottom: #ddd solid 1px;
 }
 .subMenu li a{
-    color:#333;
+    color:#fff;
 }
 .el-aside {
     /* background:rgb(43,195,172);

@@ -1,8 +1,13 @@
 import fetch from '../utils/fetch'
 
 // 获取所有新闻列表
-export function getNewsList (state) {
+export function getNewsList (page,row,title,createUser,createTime,state) {
   const data = {
+    page,
+    row,
+    title,
+    createUser,
+    createTime,
     state
   }
   return fetch({
