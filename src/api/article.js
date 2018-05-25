@@ -4,7 +4,7 @@ import fetch from '../utils/fetch'
 export function getNewsList (state) {
   const data = {
     state
-  };
+  }
   return fetch({
     url: 'article/getNewsList',
     method: 'post',
@@ -25,7 +25,7 @@ export function getDetailById (id) {
 }
 
 // 新增新闻
-export function addNews (title,content,createUser,state,createTime) {
+export function addNews (title, content, createUser, state, createTime) {
   const data = {
     title,
     content,
@@ -40,7 +40,7 @@ export function addNews (title,content,createUser,state,createTime) {
   })
 }
 
-export function setState(id,state){
+export function setState (id, state) {
   const data = {
     id,
     state
@@ -53,7 +53,7 @@ export function setState(id,state){
 }
 
 // 编辑新闻内容
-export function editNews(id,title,content,createUser,updateTime){
+export function editNews (id, title, content, createUser, updateTime) {
   const data = {
     id,
     title,
@@ -68,5 +68,3 @@ export function editNews(id,title,content,createUser,updateTime){
     data
   })
 }
-
-

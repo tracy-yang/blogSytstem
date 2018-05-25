@@ -1,9 +1,8 @@
-import cookie from 'js-cookie'
-import { login } from '@/api/user'
+import Cookies from 'js-cookie'
 
 const user = {
   state: {
-    userName: 'test03'
+    userName: Cookies.get('userName')
   },
   mutations: {
     SET_USERNAME: (state, userName) => {
@@ -11,9 +10,13 @@ const user = {
     }
   },
   actions: {
-    login ({commit}, userName) {
-      console.log(111111, '进入action方法')
-      userName = userName.trim()
+    set_userName ({commit}, name) {
+      commit('SET_USERNAME', name)
+      Cookies.set('userName', name)
+    },
+    logout ({commit}) {
+      commit('SET_USERNAME', '')
+      Cookies.remove('userName')
     }
   }
 }

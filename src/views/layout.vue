@@ -2,6 +2,16 @@
 <el-container>
     <el-header>
         <h2>xx官网管理平台</h2>
+        <div>
+            <div class="img-wrapper" @click="isShow = !isShow">
+                <img src="../assets/default.png" alt="">
+                <span>{{userName}}</span>
+            </div>
+            <ul class="subMenu" v-if="isShow">
+                <li><a>修改密码</a></li>
+                <li><a href="javascript:void(0)"  @click="exit">退出</a></li>
+            </ul>
+        </div>
     </el-header>
     <el-container>
         <el-aside width="200px">
@@ -24,20 +34,49 @@
 
 <script>
 import router from '../router/index'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   data () {
     return {
-      routerList: [] // 路由列表
+      routerList: [], // 路由列表
+      isShow: false // 菜单是否显示
     }
   },
   created () {
     this.showRouter()
   },
+  computed: {
+    ...mapGetters(['userName'])
+
+  },
   methods: {
+    ...mapActions(['logout']),
+
     // 显示所有路由
     showRouter () {
       this.routerList = router.options.routes
+    },
+
+    // 退出
+    exit () {
+      this.$confirm('是否要退出', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 方法1
+        this.logout().then(() => { //
+          this.$router.push({name: '登陆'})
+        })
+
+        // 方法2
+        // this.$store.dispatch('logout').then(() => {
+        //   this.$router.push({name: '登陆'})
+        // })
+      }).catch(() => {
+
+      })
     }
   }
 
@@ -46,15 +85,43 @@ export default {
 
 <style scoped>
 .el-header, .el-footer {
-background-color: #333;
-color: #999;
-text-align: center;
-line-height: 60px;
+    background-color: #333;
+    color: #999;
+    text-align: center;
+    line-height: 60px;
+    display: flex;
+    justify-content: space-between;
 }
 .el-header h2{
     text-align: left;
 }
+.el-header .img-wrapper{
+    margin-top:10px;
+    cursor: pointer;
+}
+.el-header .img-wrapper span{
+    vertical-align: top;
+    color:#fff;
+}
+.el-header .img-wrapper img{
+    width: 40px;
+    height:40px;
+}
 
+.subMenu{
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    z-index: 100;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+}
+.subMenu li{
+    padding:0 15px;
+    border-bottom: #ddd solid 1px;
+}
+.subMenu li a{
+    color:#333;
+}
 .el-aside {
     /* background:rgb(43,195,172);
     color:#fff;

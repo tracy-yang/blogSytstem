@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import layout from '@/views/layout'
+import Cookies from 'js-cookie'
 
 // 测试页
 import HelloWorld from '@/components/HelloWorld'
@@ -20,7 +21,7 @@ import addNewArticle from '@/views/article/addNewArticle' // 文章详情页
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {path: '/login', component: login, name: '登陆'},
     {
@@ -54,3 +55,17 @@ export default new Router({
     { path: '*', component: NotFoundComponent }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  let userName = Cookies.get('userName')
+  if (!userName) {
+    if (to.path !== '/login') {
+      next('/login')
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+export default router
