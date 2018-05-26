@@ -15,7 +15,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="创建时间">
-                <el-date-picker v-model="form.createTime" type="date" placeholder="选择创建日期" style="width:100%"></el-date-picker>
+                <el-date-picker v-model="form.createTime" type="date" placeholder="选择创建日期" style="width:100%" format="yyyy-MM-dd"></el-date-picker>
               </el-form-item>
             </el-col>
           </el-row>
@@ -118,7 +118,10 @@ export default {
   methods: {
     // 获取列表信息
     getTableData () {
-      getNewsList(this.listQuery.pageSize,this.listQuery.page,this.form.title,this.form.createUser,this.form.createTime,this.form.state).then(res => {
+      console.log(this.form.createTime);
+      let start = this.form.createTime?moment('2018-5-18').utc().format('YYYY-MM-DD'):'';
+      console.log(start);
+      getNewsList(this.listQuery.pageSize,this.listQuery.page,this.form.title,this.form.createUser,start,this.form.state).then(res => {
         this.tableData = res.content.list
         this.tableData.forEach(item => {
           item.createTime = item.createTime ? moment(item.createTime).format('YYYY-MM-DD HH:mm:ss') : '--'
@@ -130,7 +133,7 @@ export default {
     // 查询
     submit(){
       console.log(this.layout)
-      
+      this.getTableData () ;
     },
 
 
