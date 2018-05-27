@@ -57,15 +57,17 @@
                   </template>
               </el-table-column>
           </el-table>
-          <el-pagination  
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="listQuery.page"
-            :page-sizes="[10,20,50]"
-            :page-size="10"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="listQuery.total">
-          </el-pagination> 
+          <div name="page" class="page">
+            <el-pagination  
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="listQuery.page"
+              :page-sizes="[10,20,50]"
+              :page-size="10"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="listQuery.total">
+            </el-pagination> 
+          </div>
         </div>
       
       </table-layout>
@@ -118,11 +120,9 @@ export default {
   methods: {
     // 获取列表信息
     getTableData () {
-      console.log(this.form.createTime);
-      let start = this.form.createTime?moment('2018-5-18').utc().format('YYYY-MM-DD'):'';
-      console.log(start);
-      getNewsList(this.listQuery.pageSize,this.listQuery.page,this.form.title,this.form.createUser,start,this.form.state).then(res => {
-        this.tableData = res.content.list
+      getNewsList(this.listQuery.pageSize,this.listQuery.page,this.form.title,this.form.createUser,this.form.createTime,this.form.state).then(res => {
+        this.tableData = res.content.list;
+        this.listQuery.total = res.content.pagination.total;
         this.tableData.forEach(item => {
           item.createTime = item.createTime ? moment(item.createTime).format('YYYY-MM-DD HH:mm:ss') : '--'
           item.updateTime = item.updateTime ? moment(item.updateTime).format('YYYY-MM-DD HH:mm:ss') : '--'
@@ -185,10 +185,12 @@ export default {
     //handleSizeChange
     handleSizeChange(val){
       this.listQuery.pageSize = val;
+      this.getTableData ();
     },
 
     handleCurrentChange(val){
       this.listQuery.page = val;
+      this.getTableData ();
     }
 
     
@@ -203,5 +205,9 @@ export default {
 </script>
 
 <style scoped>
+.page{
+  text-align: right;
+  padding-top: 20px;
+}
 
 </style>
