@@ -19,6 +19,7 @@
                 <li v-for="(item,index) in routerList" :key="index" class="router-item" v-if="item.path !== '*'  &&  item.path !== '/' && item.path !== '/login'">
                     <router-link :to="item.path" >{{item.name}}</router-link>
                 </li>
+                <!-- <el-button @click="getInfo">连接</el-button> -->
             </ul>
 
         </el-aside>
@@ -35,21 +36,24 @@
 <script>
 import router from '../router/index'
 import {mapGetters, mapActions} from 'vuex'
-
+import Vue from 'vue'
 export default {
   data () {
     return {
       routerList: [], // 路由列表
-      isShow: false // 菜单是否显示
+      isShow: false, // 菜单是否显示
+      message: ''
     }
   },
   created () {
     this.showRouter()
+    this.getInfo()
   },
   computed: {
     ...mapGetters(['userName'])
 
   },
+
   methods: {
     ...mapActions(['logout']),
 
@@ -77,6 +81,30 @@ export default {
       }).catch(() => {
 
       })
+    },
+
+    getInfo () {
+      var ws = new WebSocket('ws://192.168.121.23:8181')
+      ws.onopen = function () {
+        // Web Socket 已连接上，使用 send() 方法发送数据
+        alert('链接开通')
+        // ws.send()
+      }
+
+      ws.onmessage = (evt) => {
+        let message = JSON.parse(evt.data).message
+        if (message) {
+          this.$notify({
+            title: '新信息提示',
+            message: message
+          })
+        }
+      }
+
+      ws.onclose = function () {
+        // 关闭 websocket
+        alert('连接已关闭...')
+      }
     }
   }
 
